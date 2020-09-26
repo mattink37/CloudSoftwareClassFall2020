@@ -10,7 +10,7 @@ namespace WebApp.Pages
 {
   public class GradeViewModel : PageModel
   {
-    public string student1 { get; set; }
+    public List<string> students { get; set; }
     public void OnGet()
     {
       SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder();
@@ -25,14 +25,8 @@ namespace WebApp.Pages
       connection.Open();
 
       SqlDataReader reader = cmd.ExecuteReader();
-
-      while (reader.Read()) { student1 = reader.GetString(0) + " " + reader.GetString(1) + ": " + reader.GetValue(2); }
-        
-
-      //while (reader.Read())
-      //{
-      //  Console.WriteLine(reader.GetString(0) + " " + reader.GetString(1) + ": " + reader.GetValue(2));
-      //}
+      students = new List<string>();
+      while (reader.Read()) { students.Add(reader.GetString(0) + " " + reader.GetString(1) + ": " + reader.GetValue(2)); }
     }
   }
 }

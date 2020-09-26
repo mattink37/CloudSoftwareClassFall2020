@@ -6,4 +6,9 @@
 
 <h1>Student Grades</h1>
 
-<p>@Model.student1</p>
+@{
+  for (int i = 0; i < Model.students.Count(); i++)
+  {
+    <p>@Model.students[i]</p>
+  }
+}
