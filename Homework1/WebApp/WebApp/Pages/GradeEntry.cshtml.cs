@@ -10,14 +10,26 @@ namespace WebApp.Pages
 {
   public class GradeEntryModel : PageModel
   {
-    public void OnPost()
+    public IActionResult OnPost()
     {
-      var studentName = Request.Form["studentname"];
-      var numericalGrade = Request.Form["numericalgrade"];
-    }
-    public void OnGet()
-    {
+      var id = Request.Form["id"];
+      var grade = Request.Form["grade"];
 
+      SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder();
+      builder.DataSource = "cloudcomputingclassdb.database.windows.net";
+      builder.UserID = "mattink37";
+      builder.Password = "a:U7wp_a";
+      builder.InitialCatalog = "CloudComputingClassDB";
+      SqlConnection connection = new SqlConnection(builder.ConnectionString);
+
+      string query = $"insert into Grades (id, grade) values ('{id}', '{grade}');";
+      SqlCommand cmd = new SqlCommand(query, connection);
+      connection.Open();
+
+      SqlDataReader reader = cmd.ExecuteReader();
+
+      string url = "/GradeView";
+      return Redirect(url);
     }
   }
 }

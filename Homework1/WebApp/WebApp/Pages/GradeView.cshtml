@@ -7,8 +7,19 @@
 <h1>Student Grades</h1>
 
 @{
-  for (int i = 0; i < Model.students.Count(); i++)
+  var numStudents = Model.students.Count();
+  for (int i = 0; i < numStudents; i++)
   {
-    <p>@Model.students[i]</p>
+    <p>Here are the grades for @Model.students[i].id:</p>
+
+    float avg = 0;
+    var numGrades = Model.students[i].grades.Count;
+    for (int j = 0; j < numGrades; j++)
+    {
+      avg += Model.students[i].grades[j];
+      <p>Grade @(j+1): @Model.students[i].grades[j]</p>
+    }
+    avg /= numGrades;
+    <p>Their average is @avg</p>
   }
 }

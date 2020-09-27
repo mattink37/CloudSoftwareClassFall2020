@@ -10,7 +10,7 @@ namespace WebApp.Pages
 {
   public class GradeViewModel : PageModel
   {
-    public List<string> students { get; set; }
+    public List<Student> students { get; set; }
     public void OnGet()
     {
       SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder();
@@ -20,13 +20,33 @@ namespace WebApp.Pages
       builder.InitialCatalog = "CloudComputingClassDB";
       SqlConnection connection = new SqlConnection(builder.ConnectionString);
 
-      string query = "select * from students";
+      string query = "select * from grades";
       SqlCommand cmd = new SqlCommand(query, connection);
       connection.Open();
 
       SqlDataReader reader = cmd.ExecuteReader();
-      students = new List<string>();
-      while (reader.Read()) { students.Add(reader.GetString(0) + " " + reader.GetString(1) + ": " + reader.GetValue(2)); }
+      students = new List<Student>();
+      while (reader.Read()) 
+      {
+        var studentId = reader.GetValue(0);
+        var grade = reader.GetValue(1);
+
+        var studentExists = false;
+        foreach (var student in students)
+        {
+          if (student.id == (int)studentId)
+          {
+            student.grades.Add(Convert.ToSingle(grade));
+            studentExists = true;
+            break;
+          }
+        }
+        if (!studentExists)
+        {
+          students.Add(new Student((int)studentId, new List<float>() { Convert.ToSingle(grade) }));
+        }
+      }
+      connection.Close();
     }
   }
 }
