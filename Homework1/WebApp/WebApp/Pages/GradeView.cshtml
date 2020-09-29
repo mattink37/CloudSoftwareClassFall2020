@@ -4,13 +4,13 @@
   ViewData["Title"] = "Student Grade View";
 }
 
-<h1>Student Grades</h1>
+<h1>All Student Grades</h1>
 
 @{
   var numStudents = Model.students.Count();
   for (int i = 0; i < numStudents; i++)
   {
-    <p>Here are the grades for @Model.students[i].id:</p>
+    <p><b>Here are the grades for @Model.students[i].id:</b></p>
 
     float avg = 0;
     var numGrades = Model.students[i].grades.Count;
@@ -22,4 +22,5 @@
     avg /= numGrades;
     <p>Their average is @avg</p>
   }
+
 }

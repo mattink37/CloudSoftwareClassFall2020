@@ -11,6 +11,7 @@ namespace WebApp.Pages
   public class GradeViewModel : PageModel
   {
     public List<Student> students { get; set; }
+
     public void OnGet()
     {
       SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder();
