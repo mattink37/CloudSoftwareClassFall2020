@@ -12,31 +12,37 @@ using WebApp.wwwroot;
 
 namespace WebApp.Pages
 {
-    public class nhl_statsModel : PageModel
+  public class nhl_statsModel : PageModel
+  {
+    private string response;
+    public NHL_Teams_Data teams;
+    public string sortType;
+    public void OnGet()
     {
-        private string response;
-        public NHL_Teams_Data teams;
-        public string sortType;
-        public void OnGet()
-        {
-            WebClient wc = new WebClient();
-            response = wc.DownloadString("https://statsapi.web.nhl.com/api/v1/teams");
+      WebClient wc = new WebClient();
+      response = wc.DownloadString("https://statsapi.web.nhl.com/api/v1/teams");
 
-            teams = new NHL_Teams_Data(response);
-        }
-
-        public void OnPost()
-        {
-            sortType = Request.Form["sortType"];
-
-            switch (sortType)
-            {
-                case "firstYearOfPlay":
-                    NHL_Teams_Data.SortTeamsByFirstYearOfPlay();
-                    break;
-                default:
-                    break;
-            }
-        }
+      teams = new NHL_Teams_Data(response);
     }
+
+    public void OnPost()
+    {
+      sortType = Request.Form["sortType"];
+
+      switch (sortType)
+      {
+        case "firstYearOfPlayAscending":
+          NHL_Teams_Data.SortTeamsByFirstYearOfPlay();
+          break;
+        case "firstYearOfPlayDescending":
+          if (NHL_Teams_Data.sortStatus != "Sorted by first year of play")
+            NHL_Teams_Data.SortTeamsByFirstYearOfPlay();
+          NHL_Teams_Data.nameList.Reverse();
+          NHL_Teams_Data.firstYearOfPlayList.Reverse();
+          break;
+        default:
+          break;
+      }
+    }
+  }
 }

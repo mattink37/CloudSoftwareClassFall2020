@@ -6,15 +6,15 @@
 @{
     <label for="sortType">Sort by:</label>
 
-    <form>
-        <select name="sortType" method="post" id="sortType">
-            <option value="default">default</option>
-            <option value="firstYearOfPlay">First Year of Play</option>
-        </select>
+    <form method="post">
+      <select name="sortType" id="sortType">
+        <option value="firstYearOfPlayAscending" selected>^ First Year Of Play</option>
+        <option value="firstYearOfPlayDescending">v First Year Of Play</option>
+      </select>
         <input type="submit" value="Submit">
     </form>
 
-    <p>@WebApp.wwwroot.NHL_Teams_Data.sortStatus</p>
+    <p><b>@WebApp.wwwroot.NHL_Teams_Data.sortStatus</b></p>
     for (int i = 0; i < WebApp.wwwroot.NHL_Teams_Data.nameList.Count; i++)
     {
         <p>@WebApp.wwwroot.NHL_Teams_Data.nameList[i]: @WebApp.wwwroot.NHL_Teams_Data.firstYearOfPlayList[i]</p>
