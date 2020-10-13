@@ -15,13 +15,28 @@ namespace WebApp.Pages
     public class nhl_statsModel : PageModel
     {
         private string response;
-        public NHL_Teams_Data team;
+        public NHL_Teams_Data teams;
+        public string sortType;
         public void OnGet()
         {
             WebClient wc = new WebClient();
             response = wc.DownloadString("https://statsapi.web.nhl.com/api/v1/teams");
 
-            team = new NHL_Teams_Data(response);
+            teams = new NHL_Teams_Data(response);
+        }
+
+        public void OnPost()
+        {
+            sortType = Request.Form["sortType"];
+
+            switch (sortType)
+            {
+                case "firstYearOfPlay":
+                    NHL_Teams_Data.SortTeamsByFirstYearOfPlay();
+                    break;
+                default:
+                    break;
+            }
         }
     }
 }

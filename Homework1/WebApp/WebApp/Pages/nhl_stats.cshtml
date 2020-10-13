@@ -3,11 +3,21 @@
 @{
 }
 
-@{ 
-    for (int i = 0; i < Model.team.nameList.Count; i++)
+@{
+    <label for="sortType">Sort by:</label>
+
+    <form>
+        <select name="sortType" method="post" id="sortType">
+            <option value="default">default</option>
+            <option value="firstYearOfPlay">First Year of Play</option>
+        </select>
+        <input type="submit" value="Submit">
+    </form>
+
+    <p>@WebApp.wwwroot.NHL_Teams_Data.sortStatus</p>
+    for (int i = 0; i < WebApp.wwwroot.NHL_Teams_Data.nameList.Count; i++)
     {
-        <p>@Model.NHL_Teams_Data.nameList[i]: @Model.NHL_Teams_Data.firstYearOfPlayList[i]</p>
+        <p>@WebApp.wwwroot.NHL_Teams_Data.nameList[i]: @WebApp.wwwroot.NHL_Teams_Data.firstYearOfPlayList[i]</p>
 
     }
-    <p>Seattle Kraken: 2021</p>
 }
