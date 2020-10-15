@@ -32,13 +32,10 @@ namespace WebApp.Pages
       switch (sortType)
       {
         case "firstYearOfPlayAscending":
-          NHL_Teams_Data.SortTeamsByFirstYearOfPlay();
+          NHL_Teams_Data.SortTeamsByAscendingFirstYearOfPlay();
           break;
         case "firstYearOfPlayDescending":
-          if (NHL_Teams_Data.sortStatus != "Sorted by first year of play")
-            NHL_Teams_Data.SortTeamsByFirstYearOfPlay();
-          NHL_Teams_Data.nameList.Reverse();
-          NHL_Teams_Data.firstYearOfPlayList.Reverse();
+          NHL_Teams_Data.SortTeamsByDescendingFirstYearOfPlay();
           break;
         default:
           break;
