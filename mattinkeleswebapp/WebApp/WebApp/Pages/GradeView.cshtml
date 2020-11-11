@@ -1,0 +1,26 @@
+﻿@page
+@model WebApp.Pages.GradeViewModel
+@{
+  ViewData["Title"] = "Student Grade View";
+}
+
+<h1>All Student Grades</h1>
+
+@{
+  var numStudents = Model.students.Count();
+  for (int i = 0; i < numStudents; i++)
+  {
+    <p><b>Here are the grades for @Model.students[i].id:</b></p>
+
+    float avg = 0;
+    var numGrades = Model.students[i].grades.Count;
+    for (int j = 0; j < numGrades; j++)
+    {
+      avg += Model.students[i].grades[j];
+      <p>Grade @(j+1): @Model.students[i].grades[j]</p>
+    }
+    avg /= numGrades;
+    <p>Their average is @avg</p>
+  }
+
+}

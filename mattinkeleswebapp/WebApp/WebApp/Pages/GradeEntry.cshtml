@@ -1,63 +1,14 @@
 ﻿@page
 @model WebApp.Pages.GradeEntryModel
 @{
-  ViewData["Title"] = "Student Grades";
+  ViewData["Title"] = "Student Grade Entry";
 }
+<h1>Enter your students' grades</h1>
 
-@*<form method="post">
-    ID
-    <input type="number" name="id">
-    Grade
-    <input type="number" name="grade">
-    <input type="submit" />
-  </form>*@
-
-@*<h1>All Student Grades</h1>
-
-  @{
-    var numStudents = Model.students.Count();
-    for (int i = 0; i < numStudents; i++)
-    {
-      <p><b>Here are the grades for @Model.students[i].id:</b></p>
-
-      float avg = 0;
-      var numGrades = Model.students[i].grades.Count;
-      for (int j = 0; j < numGrades; j++)
-      {
-        avg += Model.students[i].grades[j];
-        <p>Grade @(j+1): @Model.students[i].grades[j]</p>
-      }
-      avg /= numGrades;
-      <p>Their average is @avg</p>
-    }
-
-  }*@
-
-<form action="">
-  <select name="students" onchange="showStudent(this.value)">
-    <option value="">Select a student:</option>
-    <option value="0">student 0</option>
-    <option value="1">student 1</option>
-    <option value="123">student 123</option>
-  </select>
+<form method="post">
+  ID
+  <input type="number" name="id">
+  Grade
+  <input type="number" name="grade">
+  <input type="submit" />
 </form>
-<br>
-<div id="txtHint">Student grades will be listed here</div>
-
-<script>
-  function showStudent(str) {
-    var xhttp;
-    if (str == "") {
-      document.getElementById("txtHint").innerHTML = "";
-      return;
-    }
-    xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function () {
-      if (this.readyState == 4 && this.status == 200) {
-        document.getElementById("txtHint").innerHTML = this.responseText;
-      }
-    };
-    xhttp.open("GET", "getStudent.php?q=" + str, true);
-    xhttp.send();
-  }
-</script>

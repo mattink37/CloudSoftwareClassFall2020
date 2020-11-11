@@ -8,61 +8,28 @@ using System.Data.SqlClient;
 
 namespace WebApp.Pages
 {
-    public class GradeEntryModel : PageModel
+  public class GradeEntryModel : PageModel
+  {
+    public IActionResult OnPost()
     {
-        SqlConnection connection;
-        public List<Student> students { get; set; }
-        public GradeEntryModel()
-        {
-            SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder();
-            builder.DataSource = "cloudcomputingclassdb.database.windows.net";
-            builder.UserID = "mattink37";
-            builder.Password = "a:U7wp_a";
-            builder.InitialCatalog = "CloudComputingClassDB";
-            connection = new SqlConnection(builder.ConnectionString);
-        }
+      var id = Request.Form["id"];
+      var grade = Request.Form["grade"];
 
-        public void OnPost()
-        {
-            var id = Request.Form["id"];
-            var grade = Request.Form["grade"];
+      SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder();
+      builder.DataSource = "cloudcomputingclassdb.database.windows.net";
+      builder.UserID = "mattink37";
+      builder.Password = "a:U7wp_a";
+      builder.InitialCatalog = "CloudComputingClassDB";
+      SqlConnection connection = new SqlConnection(builder.ConnectionString);
 
-            string query = $"insert into Grades (id, grade) values ('{id}', '{grade}');";
-            SqlCommand cmd = new SqlCommand(query, connection);
-            connection.Open();
-            SqlDataReader reader = cmd.ExecuteReader();
-            connection.Close();
-        }
+      string query = $"insert into Grades (id, grade) values ('{id}', '{grade}');";
+      SqlCommand cmd = new SqlCommand(query, connection);
+      connection.Open();
 
-        public void OnGet()
-        {
-            string query = "select * from grades";
-            SqlCommand cmd = new SqlCommand(query, connection);
-            connection.Open();
+      SqlDataReader reader = cmd.ExecuteReader();
 
-            SqlDataReader reader = cmd.ExecuteReader();
-            students = new List<Student>();
-            while (reader.Read())
-            {
-                var studentId = reader.GetValue(0);
-                var grade = reader.GetValue(1);
-
-                var studentExists = false;
-                foreach (var student in students)
-                {
-                    if (student.id == (int)studentId)
-                    {
-                        student.grades.Add(Convert.ToSingle(grade));
-                        studentExists = true;
-                        break;
-                    }
-                }
-                if (!studentExists)
-                {
-                    students.Add(new Student((int)studentId, new List<float>() { Convert.ToSingle(grade) }));
-                }
-            }
-            connection.Close();
-        }
+      string url = "/GradeView";
+      return Redirect(url);
     }
+  }
 }
