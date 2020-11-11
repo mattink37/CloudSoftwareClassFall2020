@@ -23,7 +23,7 @@
 ?>
 
 <head>
-  <link rel="shortcut icon" href="">
+  <link rel="shortcut icon" href="favicon.ico">
 </head>
 
 <button onclick="myFunction()">Toggle Mode</button>
